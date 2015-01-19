@@ -1,16 +1,28 @@
 from archer import Archer
 from utils.zeus import zeus_client
 from config import ZEUS
+from thrift.Thrift import TException
+import inspect
 
 app = Archer(__name__)
 zeus_client.read_config(ZEUS)
 
 def test_error_handler(meta,result):
     print 'Exception occured'
-    raise meta.app.thrift.EUSUserException(1, 'sdfsd', 'sdfdsf')
+    if isinstance(result.error,zeus_client.constants['eus'].EUSUserException):
+        raise meta.app.thrift.EUSUserException(1, 'sdfsd', 'sdfdsf')
         
 
-app.register_error_handler(zeus_client.constants['eus'].EUSUserException,test_error_handler)
+app.register_error_handler(
+    TException,
+    test_error_handler)
+
+zeus_eus_methods = inspect.getmembers(zeus_client['eus'].service, predicate=inspect.ismethod)
+
+
+for zeus_eus_method in zeus_eus_methods:
+    print zeus_eus_method
+    app.api(zeus_eus_method[0])(zeus_eus_method[1])
 
 @app.api('ping')
 def ping():
