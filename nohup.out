@@ -1,0 +1,34 @@
+Running on 127.0.0.1:6000 in DEBUG mode
+Running on 127.0.0.1:6000 in DEBUG mode
+ERROR:root:'module' object has no attribute 'EUSUserException'
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/thriftpy/server.py", line 92, in handle
+    self.processor.process(iprot, oprot)
+  File "/Library/Python/2.7/site-packages/thriftpy/thrift.py", line 235, in process
+    self.handle_exception(e, result)
+  File "/Library/Python/2.7/site-packages/thriftpy/thrift.py", line 232, in process
+    result.success = call()
+  File "/Library/Python/2.7/site-packages/thriftpy/thrift.py", line 198, in <lambda>
+    *(args.__dict__[k] for k in api_args)
+  File "/Library/Python/2.7/site-packages/archer/app.py", line 294, in wrapper
+    return handler(api_meta, result_meta)
+  File "./demo.py", line 10, in test_error_handler
+    raise(meta.app.thrift_module.EUSUserException(1, 'sdfsd', 'sdfdsf'))
+AttributeError: 'module' object has no attribute 'EUSUserException'
+ * Detected change in '/Users/zhangkaifan/workspace/archer/sample/ers.thrift', reloading
+ * Restarting with reloader
+Running on 127.0.0.1:6000 in DEBUG mode
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/threading.py", line 810, in __bootstrap_inner
+    self.run()
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/threading.py", line 763, in run
+    self.__target(*self.__args, **self.__kwargs)
+  File "/Library/Python/2.7/site-packages/thriftpy/server.py", line 73, in serve
+    self.trans.listen()
+  File "/Library/Python/2.7/site-packages/thriftpy/transport/socket.py", line 157, in listen
+    self.handle.bind(res[4])
+  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/socket.py", line 224, in meth
+    return getattr(self._sock,name)(*args)
+error: [Errno 48] Address already in use
+
