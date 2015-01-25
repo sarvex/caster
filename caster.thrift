@@ -4863,8 +4863,9 @@ service PingPong {
         throws (1: EUSUserException user_exception,
                 2: EUSSystemException system_exception,
                 3: EUSUnknownException unknown_exception),
-    bool ping()
+    /* bool ping()
         throws (1: EUSUserException user_exception,
                 2: EUSSystemException system_exception,
-                3: EUSUnknownException unknown_exception),
+                3: EUSUnknownException unknown_exception), */
+    string ping()
 }
