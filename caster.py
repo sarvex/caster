@@ -1,7 +1,6 @@
 from archer import Archer
 from utils.zeus import zeus_client
 from config import ZEUS
-from thrift.Thrift import TException
 import inspect
 
 app = Archer(__name__)
@@ -9,23 +8,36 @@ zeus_client.read_config(ZEUS)
 
 def test_error_handler(meta, result):
     print 'Exception occured'
-    if isinstance(result.error, zeus_client.constants['eus'].EUSUserException):
-        raise meta.app.thrift.EUSUserException(1, 'sdfsd', 'sdfdsf')
+    #if isinstance(result.error, zeus_client.constants['ers'].ERSUserException):
+    error = result.error
+    raise meta.app.thrift.ERSSystemException(error.error_code, error.error_name, error.message)
         
 
 def zeus_log(meta):
     print 'zeus_log'
+    print meta.name
+
+def zeus_log_result(meta,result):
+    if result.error == None:
+        print meta.name
+        print result.result
+    else: 
+        print result.error.error_code
 
 app.register_error_handler(
-    TException,
+    zeus_client.constants['ers'].ERSSystemException,
     test_error_handler)
 
-app.before_api_call(zeus_log);
+app.before_api_call(zeus_log)
+app.tear_down_api_call(zeus_log_result)
 
-zeus_eus_methods = zeus_client['eus'].service.thrift_services
+zeus_ers_methods = zeus_client['ers'].service.thrift_services
 
-for zeus_eus_method in zeus_eus_methods:
-    app.api(zeus_eus_method)(getattr(zeus_client['eus'],zeus_eus_method))
+for zeus_ers_method in zeus_ers_methods:
+    app.api(zeus_ers_method)(getattr(zeus_client['ers'],zeus_ers_method))
+
+if __name__ == '__main__':
+    app.run()
 
 """@app.api('ping')
 def ping():
