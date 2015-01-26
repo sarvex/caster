@@ -2,6 +2,7 @@ from archer import Archer
 from utils.zeus import zeus_client
 from config import ZEUS
 import inspect
+import time
 
 app = Archer(__name__)
 zeus_client.read_config(ZEUS)
@@ -15,14 +16,19 @@ def test_error_handler(meta, result):
 
 def zeus_log(meta):
     print 'zeus_log'
-    print meta.name
+    print 'api name: ', meta.name
+    print 'args: ', meta.args
+    print 'start time: ', meta.start_time
 
 def zeus_log_result(meta,result):
     if result.error == None:
-        print meta.name
-        print result.result
+        print 'api name: ', meta.name
+        print 'api result: ',result.result
+        print 'response time: ',result.end_time-meta.start_time
     else: 
+        print 'api name: ', meta.name
         print result.error.error_code
+        print 'response time: ',result.end_time-meta.start_time
 
 app.register_error_handler(
     zeus_client.constants['ers'].ERSSystemException,
