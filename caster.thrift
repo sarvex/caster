@@ -2293,10 +2293,10 @@ service ElemeRestaurantService {
      * Base APIs
      */
 
-    /*bool ping()
+    bool ping()
         throws (1: ERSUserException user_exception,
                 2: ERSSystemException system_exception,
-                3: ERSUnknownException unknown_exception),*/
+                3: ERSUnknownException unknown_exception),
 
     Json search_restaurant(1: TRestaurantSearchQuery query_struct)
         throws (1: ERSUserException user_exception,
@@ -4845,7 +4845,7 @@ service ElemeRestaurantService {
                 3: ERSUnknownException unknown_exception),
 }
 
-service PingPong {
+/* service PingPong {
     void ping()
         throws (1: ERSUserException user_exception,
                 2: ERSSystemException system_exception,
@@ -4863,9 +4863,8 @@ service PingPong {
         throws (1: EUSUserException user_exception,
                 2: EUSSystemException system_exception,
                 3: EUSUnknownException unknown_exception),
-    /* bool ping()
+     bool ping()
         throws (1: EUSUserException user_exception,
                 2: EUSSystemException system_exception,
-                3: EUSUnknownException unknown_exception), */
-    string ping()
-}
+                3: EUSUnknownException unknown_exception),
+} */

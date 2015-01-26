@@ -22,14 +22,12 @@ app.register_error_handler(
 
 app.before_api_call(zeus_log);
 
-zeus_eus_methods = inspect.getmembers(zeus_client['eus'].service, predicate=inspect.ismethod)
-
+zeus_eus_methods = zeus_client['eus'].service.thrift_services
 
 for zeus_eus_method in zeus_eus_methods:
-    print zeus_eus_method
-    app.api(zeus_eus_method[0])(zeus_eus_method[1])
+    app.api(zeus_eus_method)(getattr(zeus_client['eus'],zeus_eus_method))
 
-@app.api('ping')
+"""@app.api('ping')
 def ping():
     #return zeus_client['eus'].ping()
     return 'pong'
@@ -45,4 +43,4 @@ def walle_update_mobile_and_name(user_id, mobile, name):
 
 @app.api('test_error_handler')
 def test_error():
-    raise TException
+    raise TException"""
