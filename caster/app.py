@@ -49,7 +49,7 @@ class Caster(Archer):
         stdout_handler.setFormatter(logging.Formatter(
             self.log_config['format']
         ))
-        self.logger = logging.getLogger('zeus_servie: ' + zeus_service)
+        self.logger = logging.getLogger(zeus_service)
         self.logger.setLevel(logging.INFO)
         self.logger.addHandler(stdout_handler)
 
@@ -66,8 +66,8 @@ class Caster(Archer):
         self.init_log_config(zeus_service)
         self.registe_api_log_call()
 
+app = Caster(__name__)
 if __name__ == '__main__':
-    app = Caster(__name__)
     app.init('ers')
     app.run()
 

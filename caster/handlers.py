@@ -11,7 +11,7 @@ def UserExceptionHandler(meta, result):
             error.error_code, error.error_name, error.message)
 
 def zeus_before_api_call(meta):
-    meta.logger.info('api name: {}, args: {}'.format(meta.name,meta.args))
+    meta.app.logger.info('{}({})'.format(meta.name,meta.args))
 
 def zeus_after_api_call(meta,result):
     if result.error == None:
