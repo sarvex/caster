@@ -1,3 +1,5 @@
+import logging
+
 ZEUS= {
         'client': 'pycy',  # pycy/py/thrift
         'pool': 'base',  # base/heartbeat
@@ -20,4 +22,10 @@ ZEUS= {
             },
         },
         'lazy_load': False  # True/False
+    }
+
+LOG = {
+        'format': '%(asctime)s %(levelname)s: %(message)s'
+                          ' [in %(pathname)s:%(lineno)d]',
+        'level': logging.INFO,
     }

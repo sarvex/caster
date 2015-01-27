@@ -1,34 +1,52 @@
 from archer import Archer
 from utils.zeus import zeus_client
-from config import ZEUS
+from config import (
+    ZEUS,
+    LOG
+)
+
 import inspect
 import time
+import logging
+import sys
 
-app = Archer(__name__)
-zeus_client.read_config(ZEUS)
 
 def test_error_handler(meta, result):
-    print 'Exception occured'
+    logger.exception('Exception occured')
     #if isinstance(result.error, zeus_client.constants['ers'].ERSUserException):
     error = result.error
     raise meta.app.thrift.ERSSystemException(error.error_code, error.error_name, error.message)
         
 
 def zeus_log(meta):
-    print 'zeus_log'
-    print 'api name: ', meta.name
-    print 'args: ', meta.args
-    print 'start time: ', meta.start_time
+    logger.info('service: {}, api name: {}, args: {}'.format('ers',meta.name,meta.args))
 
 def zeus_log_result(meta,result):
     if result.error == None:
-        print 'api name: ', meta.name
-        print 'api result: ',result.result
-        print 'response time: ',result.end_time-meta.start_time
+        logger.info('service: {}, api name: {}, result: {}'.format('ers',meta.name,result.result))
+        logger.info('service: {}, response time: {}'.format('ers',result.end_time-meta.start_time))
     else: 
-        print 'api name: ', meta.name
-        print result.error.error_code
-        print 'response time: ',result.end_time-meta.start_time
+        logger.exception('service: {}, api name: {}, result: {}'.format('ers',meta.name,result.error.error_name))
+        logger.exception('service: {}, response time: {}'.format('ers',result.end_time-meta.start_time))
+
+app = Archer(__name__)
+zeus_client.read_config(ZEUS)
+
+log_config = LOG
+
+stdout_handler = logging.StreamHandler(sys.stdout)
+#stderr_handler = logging.StreamHandler(sys.stderr)
+stdout_handler.setFormatter(logging.Formatter(
+    log_config['format']
+))
+#stderr_handler.setFormatter(logging.Formatter(
+    #log_config['format']
+#))
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logger.addHandler(stdout_handler)
+#logger.addHandler(stderr_handler)
 
 app.register_error_handler(
     zeus_client.constants['ers'].ERSSystemException,
