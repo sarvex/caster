@@ -4845,26 +4845,3 @@ service ElemeRestaurantService {
                 3: ERSUnknownException unknown_exception),
 }
 
-/* service PingPong {
-    void ping()
-        throws (1: ERSUserException user_exception,
-                2: ERSSystemException system_exception,
-                3: ERSUnknownException unknown_exception),
-    string test_error_handler()
-    void update_region_and_its_group(1:i32 region_id,
-                                     2:TRegion t_region,
-                                     3:i32 group_id)
-        throws (1: ERSUserException user_exception,
-                2: ERSSystemException system_exception,
-                3: ERSUnknownException unknown_exception),
-    void walle_update_mobile_and_name(1:i32 user_id,
-                                      2:Mobile mobile,
-                                      3:string name)
-        throws (1: EUSUserException user_exception,
-                2: EUSSystemException system_exception,
-                3: EUSUnknownException unknown_exception),
-     bool ping()
-        throws (1: EUSUserException user_exception,
-                2: EUSSystemException system_exception,
-                3: EUSUnknownException unknown_exception),
-} */
