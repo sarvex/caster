@@ -61,6 +61,7 @@ class Caster(Archer):
         if not zeus_service in self.zeus_service_list :
             raise KeyError('service not found')
         zeus_client.read_config(ZEUS)
+        self.thrift_file = './thriftfiles/{}.thrift'.format(zeus_service)
         self.registe_api_from_zeus(zeus_service)
         self.registe_zeus_error_handler(zeus_service)
         self.init_log_config(zeus_service)
@@ -68,6 +69,6 @@ class Caster(Archer):
 
 app = Caster(__name__)
 if __name__ == '__main__':
-    app.init('ers')
+    app.init(sys.argv[1])
     app.run()
 
