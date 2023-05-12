@@ -58,7 +58,7 @@ class Caster(Archer):
         self.tear_down_api_call(zeus_after_api_call)
 
     def init(self, zeus_service):
-        if not zeus_service in self.zeus_service_list :
+        if zeus_service not in self.zeus_service_list:
             raise KeyError('service not found')
         zeus_client.read_config(ZEUS)
         self.registe_api_from_zeus(zeus_service)
